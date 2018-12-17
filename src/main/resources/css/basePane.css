@@ -1,0 +1,84 @@
+.btnClass{
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 18px;
+    -fx-background-color: #7B72E9;
+    -fx-border-radius: 1;
+    -fx-border-color: #7B72E9;
+    -fx-background-radius: 1;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+.btnClass:hover{
+    -fx-font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+    -fx-background-color: #A19FEA;
+    -fx-border-color: #A19FEA;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.sp_btnClass{
+    -fx-background-color: #9B222B;
+    -fx-border-color: #9B222B;
+}
+.sp_btnClass:hover{
+    -fx-background-color: #FF4351;
+    -fx-border-color: #FF4351;
+}
+.labelClass{
+    -fx-font-weight: bold;
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 20px;
+    -fx-text-fill: #646668;
+}
+.labelClass:hover{
+    -fx-font-weight: bold;
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 20px;
+    -fx-text-fill: #646668;
+}
+.radioBtn{
+    -fx-font-weight: bold;
+    -fx-font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+    -fx-font-size: 20px;
+}
+.radioBtn:hover{
+    -fx-font-weight: bold;
+    -fx-font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+    -fx-font-size: 20px;
+}
+
+.tableViewClass{
+
+}
+.table-row-cell{
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-font-family:"Microsoft YaHei" ;
+    -fx-font-size: 20px;
+    -fx-cell-size: 40px;
+}
+
+.tableViewClass .scroll-bar:horizontal{
+    -fx-opacity: 0;
+    -fx-padding: -7;
+}
+
+.combo-box{
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-font-family:"Microsoft YaHei" ;
+    -fx-font-size: 20px;
+    -fx-cell-size: 40px;
+}
+
+.combo-box :hover{
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-font-family:"Microsoft YaHei" ;
+    -fx-font-size: 20px;
+    -fx-cell-size: 40px;
+}
+.backPane{
+    -fx-background-color: black;
+}
