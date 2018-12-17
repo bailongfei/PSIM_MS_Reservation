@@ -1,0 +1,1 @@
+del "D:\PSIM_MS_Reservation\lock.lock" /q
