@@ -205,9 +205,9 @@
                                                         <TableColumn fx:id="serialNumberColumn" editable="false" prefWidth="59.999998450279236" sortable="false" style="-fx-alignment: center;" text="序号" />
                                                         <TableColumn fx:id="customerNameColumn" editable="false" prefWidth="104.00000762939453" sortable="false" style="-fx-alignment: center;" text="患者姓名" />
                                                         <TableColumn fx:id="customerTypeColumn" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: center;" text="患者类型" />
-                                                        <TableColumn fx:id="queueNumberColumn" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: center;" text="预约科室" />
-                                                        <TableColumn fx:id="itemNameColumn" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: center;" text="预约时间段" />
-                                                        <TableColumn fx:id="statusColumn" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: center;" text="身份证号码" />
+                                                        <TableColumn fx:id="srvGroupColumn" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: center;" text="预约科室" />
+                                                        <TableColumn fx:id="srvTimeColumn" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: center;" text="预约时间段" />
+                                                        <TableColumn fx:id="customerIdColumn" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: center;" text="身份证号码" />
                                                         <TableColumn fx:id="typeColumn" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: center;" text="类别" />
                                                     </columns>
                                                 </TableView>
