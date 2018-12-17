@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -52,6 +53,12 @@ public class SchedulingController {
     private void bindEvent() {
 //        关闭窗口
         cancelButton.setOnMouseClicked(event -> window.hide());
+//        注册按钮
+        registerButton.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)){
+                System.out.println("注册按钮");
+            }
+        });
 //        回车键监听
         customerTelTextField.setOnKeyPressed(event -> {
 //            验证手机号
