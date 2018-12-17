@@ -76,5 +76,9 @@ public class SchedulingController {
         });
     }
 
+    void close(){
+       window.close();
+    }
+
 
 }
