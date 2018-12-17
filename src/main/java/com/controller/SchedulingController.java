@@ -56,7 +56,7 @@ public class SchedulingController {
 //        注册按钮
         registerButton.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)){
-                System.out.println("注册按钮");
+                System.out.println("点击注册按钮");
             }
         });
 //        回车键监听
