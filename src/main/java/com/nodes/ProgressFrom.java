@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -18,7 +19,6 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class ProgressFrom {
-
 
     private Stage dialogStage;
 
@@ -50,6 +50,11 @@ public class ProgressFrom {
         vBox.getChildren().addAll(progressIndicator,label,button);
         vBox.setStyle("-fx-background-color: rgba(255,255,255,0.5);");
         Scene scene = new Scene(vBox);
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ESCAPE)){
+                cancelProgressBar();
+            }
+        });
         scene.setFill(null);
         dialogStage.setScene(scene);
         dialogStage.setAlwaysOnTop(true);
