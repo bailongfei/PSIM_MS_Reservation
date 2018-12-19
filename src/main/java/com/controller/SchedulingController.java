@@ -3,6 +3,7 @@ package com.controller;
 import com.info.ResultMessage;
 import com.nodes.ToastController;
 import com.utils.NumberUtil;
+import com.utils.SMSUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -52,11 +53,14 @@ public class SchedulingController {
 
     private void bindEvent() {
 //        关闭窗口
-        cancelButton.setOnMouseClicked(event -> window.hide());
+        cancelButton.setOnMouseClicked(event -> {
+            System.out.println("号码："+customerTelTextField.getText());
+        });
 //        注册按钮
         registerButton.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)){
                 System.out.println("点击注册按钮");
+                sendSMS();
             }
         });
 //        回车键监听
@@ -66,6 +70,7 @@ public class SchedulingController {
                 ResultMessage rs = NumberUtil.isPhone(customerTelTextField.getText());
                 if (rs.isFlag()){
 //                    执行预约操作
+                    sendSMS();
 
                 } else {
                     ToastController.getInstance().makeToast(window,rs.getInformation());
@@ -85,6 +90,15 @@ public class SchedulingController {
 
     void close(){
        window.close();
+    }
+
+    private void sendSMS(){
+        ResultMessage rs = SMSUtil.sendSMS(customerTelTextField.getText(),"温馨提示：您的餐点已为您准备好，取餐号为5601，请前往取餐区取餐。");
+        if (rs.isFlag()){
+            window.close();
+        } else {
+            ToastController.getInstance().makeToast(window,rs.getInformation());
+        }
     }
 
 

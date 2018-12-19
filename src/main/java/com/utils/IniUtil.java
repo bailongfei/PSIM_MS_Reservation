@@ -39,5 +39,20 @@ public class IniUtil {
         }
         return "COM3";
     }
+//    短息平台地址
+    static String readSMSURL(){
+        try {
+            File file = new File("AppConfig.ini");
+            if (!file.exists() && !file.isDirectory()) {
+                throw new IOException("配置文件找不到");
+            } else {
+                Ini.Section section = new Ini(file).get("SMSURL");
+                return section.get("url");
+            }
+        } catch (IOException e) {
+            LogUtil.markLog(2,"配置文件异常，IniUtil.java readSMSURL() "+e.getMessage());
+        }
+        return "";
+    }
 
 }
