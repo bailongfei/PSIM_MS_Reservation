@@ -20,7 +20,6 @@ public class SMSUtil {
         if (URL_String.equals("")){
             return resultMessage;
         }
-        System.out.println(URL_String);
         try {
             URL_String = URL_String + "&destCode=" + tel;
             URL_String = URL_String + "&content=" + URLEncoder.encode(content, "UTF-8");
