@@ -1,0 +1,27 @@
+.btnClass{
+    -fx-font-family: "Microsoft YaHei";
+    -fx-font-size: 18px;
+    -fx-background-color: #7B72E9;
+    -fx-border-radius: 1;
+    -fx-border-color: #7B72E9;
+    -fx-background-radius: 1;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+.btnClass:hover{
+    -fx-font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+    -fx-background-color: #A19FEA;
+    -fx-border-color: #A19FEA;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.sp_btnClass{
+    -fx-background-color: #9B222B;
+    -fx-border-color: #9B222B;
+}
+.sp_btnClass:hover{
+    -fx-background-color: #FF4351;
+    -fx-border-color: #FF4351;
+}
