@@ -93,7 +93,7 @@ public class SchedulingController {
     }
 
     private void sendSMS(){
-        ResultMessage rs = SMSUtil.sendSMS(customerTelTextField.getText(),"温馨提示：您的餐点已为您准备好，取餐号为5601，请前往取餐区取餐。");
+        ResultMessage rs = SMSUtil.sendSMS(customerTelTextField.getText(),"");
         if (rs.isFlag()){
             window.close();
         } else {

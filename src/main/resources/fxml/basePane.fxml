@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="740.0" minWidth="1000.0" prefHeight="740.0" prefWidth="1000.0" styleClass="backPane" stylesheets="@../css/basePane.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.BaseController">
+<AnchorPane minHeight="770.0" minWidth="1000.0" prefHeight="740.0" prefWidth="1000.0" styleClass="backPane" stylesheets="@../css/basePane.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controller.BaseController">
     <children>
-        <AnchorPane prefHeight="735.0" prefWidth="990.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane prefHeight="735.0" prefWidth="990.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="25.0">
             <children>
                 <SplitPane dividerPositions="0.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
                     <items>
@@ -163,10 +163,12 @@
                                                                 </VBox>
                                                                 <HBox alignment="CENTER" layoutY="382.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="394.0">
                                                                     <children>
-                                                                        <Button fx:id="registerButton" mnemonicParsing="false" prefWidth="114.0" styleClass="btnClass" text="预约(F5)">
-
-                                                                        </Button>
-                                                                        <Button fx:id="clearButton" mnemonicParsing="false" prefWidth="114.0" styleClass="btnClass,sp_btnClass" text="清除(ESC)">
+                                                                        <Button fx:id="registerButton" mnemonicParsing="false" prefWidth="114.0" text="预约(F5)">
+                                                         <styleClass>
+                                                            <String fx:value="btnClass" />
+                                                            <String fx:value="sp_btnClass" />
+                                                         </styleClass></Button>
+                                                                        <Button fx:id="clearButton" mnemonicParsing="false" prefWidth="114.0" styleClass="btnClass" text="清除(ESC)">
 
                                                                         </Button>
                                                                     </children>
@@ -224,6 +226,15 @@
                 </SplitPane>
             </children>
         </AnchorPane>
+      <MenuBar AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="配置">
+            <items>
+              <MenuItem fx:id="configButton" mnemonicParsing="false" text="配置科室" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
 
     </children>
 </AnchorPane>
