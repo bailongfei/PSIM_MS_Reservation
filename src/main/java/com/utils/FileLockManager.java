@@ -53,7 +53,6 @@ public class FileLockManager {
                 randomAccessFile.close();
             }
             return file.delete();
-
         }
 
     }

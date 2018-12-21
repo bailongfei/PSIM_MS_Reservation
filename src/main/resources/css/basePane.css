@@ -6,7 +6,7 @@
     -fx-border-color: #7B72E9;
     -fx-background-radius: 1;
     -fx-font-weight: bold;
-    -fx-text-fill: white;
+    -fx-text-fill: #e3e3e3;
 }
 .btnClass:hover{
     -fx-font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
@@ -80,5 +80,5 @@
     -fx-cell-size: 40px;
 }
 .backPane{
-    -fx-background-color: black;
+    -fx-background-color: #3d3d3d;
 }

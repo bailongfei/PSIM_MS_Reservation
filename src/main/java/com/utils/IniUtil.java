@@ -7,7 +7,6 @@ import org.ini4j.Wini;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,7 +52,7 @@ public class IniUtil {
                 throw new IOException("配置文件找不到");
             } else {
                 Ini.Section section = new Ini(file).get("SMSURL");
-                return section.get("url");
+                return section.get("messageUrl");
             }
         } catch (IOException e) {
             LogUtil.markLog(2, "配置文件异常，IniUtil.java readSMSURL() " + e.getMessage());

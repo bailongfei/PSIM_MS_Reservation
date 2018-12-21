@@ -50,7 +50,6 @@ public class ConfigController {
         Platform.runLater(()-> srvGroupIDSTextArea.setText(readIds));
     }
 
-
     void close(){
         window.close();
     }

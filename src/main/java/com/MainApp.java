@@ -44,17 +44,17 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
-//        FileLockManager fileLockManager = new FileLockManager("lock.lock");
-//        try {
-//            if (fileLockManager.Lock()){
-//                launch();
-//            } else {
-//                LogUtil.markLog(2,"程序不允许多开");
-//                System.exit(0);
-//            }
-//        } catch (IOException ignore) {
-//        }
-        launch();
+        FileLockManager fileLockManager = new FileLockManager("lock.lock");
+        try {
+            if (fileLockManager.Lock()){
+                launch();
+            } else {
+                LogUtil.markLog(2,"程序不允许多开");
+                System.exit(0);
+            }
+        } catch (IOException ignore) {
+        }
+//        launch();
     }
 
 }
