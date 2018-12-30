@@ -1,7 +1,8 @@
-package com.utils.cardUtil;
+package com.utils.cardUtils;
 
 import com.info.ResultMessage;
 import com.info.UserInfo;
+import com.utils.LogUtil;
 import com.webservices.TranBookingInfo;
 import com.webservices.TranBookingInfoPortType;
 import org.w3c.dom.Document;
@@ -26,6 +27,7 @@ public class CardIdentity {
         userInfo = DLLUtil.getId();
         if (userInfo!=null){
             resultMessage.setFlag(true);
+            userInfo.setCustomerNoType("1");
             resultMessage.setT(userInfo);
         } else {
             resultMessage.setFlag(false);
@@ -50,9 +52,10 @@ public class CardIdentity {
             if (resultArray.length>1){
                 if (resultArray[0][0].equals("1")){
                     userInfo = new UserInfo();
-                    userInfo.setId(cardString);
-                    userInfo.setSFZ(resultArray[1][3]);
-                    userInfo.setUserName(resultArray[1][2]);
+                    userInfo.setCustomerID(cardString);
+                    userInfo.setCustomerNo(resultArray[1][3]);
+                    userInfo.setCustomerName(resultArray[1][2]);
+                    userInfo.setCustomerNoType("1");
                     resultMessage.setInformation(resultArray[0][1]);
                     resultMessage.setT(userInfo);
                     resultMessage.setFlag(true);
@@ -76,9 +79,10 @@ public class CardIdentity {
                     if (resultArray[1][2]!=null&&!resultArray[1][2].equals("")&&resultArray[1][2].length()>1){
                         // his有信息
                         userInfo = new UserInfo();
-                        userInfo.setId(cardString);
-                        userInfo.setUserName(resultArray[1][2]);
-                        userInfo.setSFZ(resultArray[1][3]);
+                        userInfo.setCustomerID(cardString);
+                        userInfo.setCustomerName(resultArray[1][2]);
+                        userInfo.setCustomerNo(resultArray[1][3]);
+                        userInfo.setCustomerNoType("1");
                         resultMessage.setInformation(resultArray[0][1]);
                         resultMessage.setT(userInfo);
                         resultMessage.setFlag(true);
@@ -102,19 +106,24 @@ public class CardIdentity {
     public static ResultMessage<UserInfo> getUserInfoByCustomerCard(){
         System.out.println("走身份证");
         ResultMessage<UserInfo> resultMessage = new ResultMessage<>();
-        UserInfo userInfo = new UserInfo();
-        int handle = LBIDCardReader.openReader();
-        IDCardResult.ByReference info = IccDllIDCardReader.readIDCard(handle);
-        LBIDCardReader.closeReader(handle);
-        if (info!=null){
-            String id = "0";
-            String SFZ = new String(info.pid).trim();
-            String name = new String(info.name).trim();
-            userInfo.setSFZ(SFZ);
-            userInfo.setId(id);
-            userInfo.setUserName(name);
+        try{
+            UserInfo userInfo = new UserInfo();
+            int handle = LBIDCardReader.openReader();
+            IDCardResult.ByReference info = IccDllIDCardReader.readIDCard(handle);
+            LBIDCardReader.closeReader(handle);
+            if (info!=null){
+                String id = "";
+                String SFZ = new String(info.pid).trim();
+                String name = new String(info.name).trim();
+                userInfo.setCustomerNo(SFZ);
+                userInfo.setCustomerID(id);
+                userInfo.setCustomerName(name);
+                userInfo.setCustomerNoType("1");
+            }
+            resultMessage.setT(userInfo);
+        }catch (Exception e){
+            LogUtil.markLog(2,"身份证读卡异常"+e.getMessage());
         }
-        resultMessage.setT(userInfo);
         return resultMessage;
     }
 
@@ -131,6 +140,7 @@ public class CardIdentity {
         System.out.println(backInfo);
         return backInfo;
     }
+
 
     private static String[][] getData(String execXML, String[] Pname, int location) {
         // 获得xml文件内容
@@ -161,7 +171,7 @@ public class CardIdentity {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            System.out.println("xml 转换异常,CardIdentity.java getData()"+e.getMessage());
+            LogUtil.markLog(2,"获取病人基本信息，解析返回参数异常 CardIdentity.java getData() "+e.getMessage());
         }
         return pval;
     }

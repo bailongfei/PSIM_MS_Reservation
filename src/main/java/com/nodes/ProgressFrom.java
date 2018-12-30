@@ -48,7 +48,7 @@ public class ProgressFrom {
         vBox.setSpacing(20);
         vBox.setBackground(Background.EMPTY);
         vBox.getChildren().addAll(progressIndicator,label,button);
-        vBox.setStyle("-fx-background-color: rgba(255,255,255,0.5);");
+        vBox.setStyle("-fx-background-color: rgba(255,255,255,0.8);");
         Scene scene = new Scene(vBox);
         scene.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ESCAPE)){

@@ -2,7 +2,8 @@ package com.task;
 
 import com.info.ResultMessage;
 import com.info.UserInfo;
-import com.utils.cardUtil.CardIdentity;
+import com.utils.LogUtil;
+import com.utils.cardUtils.CardIdentity;
 import javafx.concurrent.Task;
 
 public class ReadCardTask extends Task<ResultMessage<UserInfo>> {
@@ -23,21 +24,28 @@ public class ReadCardTask extends Task<ResultMessage<UserInfo>> {
     @Override
     protected ResultMessage<UserInfo> call() {
         ResultMessage<UserInfo> userInfo;
-        switch (this.cardType) {
-            case ID_CARD:
-                userInfo = CardIdentity.getUserInfoByCustomerCard();
-                break;
-            case MS_CARD:
-                userInfo = CardIdentity.getUserInfoByCardString(customerNo);
-                break;
-            case SS_CARD:
-                userInfo = CardIdentity.getUserInfoBySSCard();
-                break;
-            default:
-                userInfo = new ResultMessage<>();
-                break;
+        try {
+
+            switch (this.cardType) {
+                case ID_CARD:
+                    userInfo = CardIdentity.getUserInfoByCustomerCard();
+                    break;
+                case MS_CARD:
+                    userInfo = CardIdentity.getUserInfoByCardString(customerNo);
+                    break;
+                case SS_CARD:
+                    userInfo = CardIdentity.getUserInfoBySSCard();
+                    break;
+                default:
+                    userInfo = new ResultMessage<>();
+                    break;
+            }
+            return userInfo;
+        } catch (Exception e) {
+            LogUtil.markLog(2, "读卡失败");
+            return null;
         }
-        return userInfo;
+
     }
 
 }

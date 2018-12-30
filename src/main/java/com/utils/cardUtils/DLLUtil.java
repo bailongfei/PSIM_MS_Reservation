@@ -1,4 +1,4 @@
-package com.utils.cardUtil;
+package com.utils.cardUtils;
 
 import com.info.UserInfo;
 import com.utils.LogUtil;
@@ -47,6 +47,7 @@ class DLLUtil {
             System.out.println("获取ID：" + sendMessage);
             info = SendRcv2("12345678", sendMessage, sendMessage);
             System.out.println(info);
+            LogUtil.markLog(1,info);
             id = info.substring(64, 73);
             System.out.println(id);
             System.out.println("卡号" + id.length());
@@ -56,9 +57,9 @@ class DLLUtil {
             SFZ = info.substring(101, 119);
             System.out.println(SFZ);
             System.out.println("身份证" + SFZ.length());
-            userInfo.setSFZ(SFZ);
-            userInfo.setUserName(name.trim());
-            userInfo.setId(id);
+            userInfo.setCustomerNo(SFZ);
+            userInfo.setCustomerName(name.trim());
+            userInfo.setCustomerID(id);
         } catch (NativeException | IllegalAccessException e1) {
             System.out.println("芯片卡调用出错，DLLUtil.java getId() "+e1.getMessage());
             LogUtil.markLog(2,"芯片卡调用出错"+e1.getMessage());

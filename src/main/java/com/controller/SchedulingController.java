@@ -1,7 +1,12 @@
 package com.controller;
 
+import com.entities.BookingResult;
+import com.info.ResultMap;
 import com.info.ResultMessage;
+import com.info.UserInfo;
+import com.nodes.ProgressFrom;
 import com.nodes.ToastController;
+import com.task.ConfirmBookingTask;
 import com.utils.NumberUtil;
 import com.utils.SMSUtil;
 import javafx.fxml.FXML;
@@ -27,7 +32,11 @@ public class SchedulingController {
 
     private static Stage window;
 
-    void showAndWait() {
+    private static UserInfo userInfo;
+
+    private static BookingResult bookingResult;
+
+    void showAndWait(UserInfo userInfo) {
         window = new Stage();
         window.setTitle("预约排班");
         FXMLLoader loader = new FXMLLoader();
@@ -39,6 +48,7 @@ public class SchedulingController {
             window.setScene(scene);
             window.setAlwaysOnTop(true);
             sceneBindEvent(scene);
+            SchedulingController.userInfo = userInfo;
             window.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,29 +64,50 @@ public class SchedulingController {
     private void bindEvent() {
 //        关闭窗口
         cancelButton.setOnMouseClicked(event -> {
-            System.out.println("号码："+customerTelTextField.getText());
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                close();
+            }
         });
 //        注册按钮
         registerButton.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)){
-                System.out.println("点击注册按钮");
-                sendSMS();
-            }
-        });
-//        回车键监听
-        customerTelTextField.setOnKeyPressed(event -> {
-//            验证手机号
-            if (event.getCode().equals(KeyCode.ENTER)){
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
                 ResultMessage rs = NumberUtil.isPhone(customerTelTextField.getText());
-                if (rs.isFlag()){
-//                    执行预约操作
-                    sendSMS();
+
+                if (rs.isFlag()) {
+                    userInfo.setCustomerTel(customerTelTextField.getText());
+                    // 人工预约
+                    ConfirmBookingTask confirmBookingTask = new ConfirmBookingTask(userInfo);
+                    ProgressFrom progressFrom = new ProgressFrom(confirmBookingTask, window, "预约中，请稍后");
+                    progressFrom.activateProgressBar();
+                    confirmBookingTask.valueProperty().addListener(lis -> {
+                        ResultMap<BookingResult> bookingResult = confirmBookingTask.getValue();
+                        if (bookingResult.getResultCode().equals("1")) {
+                            System.out.println("预约成功");
+                            sendSMS();
+                        } else {
+                            System.out.println("预约失败");
+                        }
+                    });
 
                 } else {
-                    ToastController.getInstance().makeToast(window,rs.getInformation());
+                    ToastController.getInstance().makeToast(window, rs.getInformation());
                 }
             }
         });
+//        回车键监听
+//        customerTelTextField.setOnKeyPressed(event -> {
+////            验证手机号
+//            if (event.getCode().equals(KeyCode.ENTER)){
+//                ResultMessage rs = NumberUtil.isPhone(customerTelTextField.getText());
+//                if (rs.isFlag()){
+////                    执行预约操作
+//                    sendSMS();
+//
+//                } else {
+//                    ToastController.getInstance().makeToast(window,rs.getInformation());
+//                }
+//            }
+//        });
     }
 
     //    面板事件绑定
@@ -88,16 +119,16 @@ public class SchedulingController {
         });
     }
 
-    void close(){
-       window.close();
+    void close() {
+        window.close();
     }
 
-    private void sendSMS(){
-        ResultMessage rs = SMSUtil.sendSMS(customerTelTextField.getText(),"");
-        if (rs.isFlag()){
+    private void sendSMS() {
+        ResultMessage rs = SMSUtil.sendSMS(customerTelTextField.getText(), "这是一条测试数据，无需回复。");
+        if (rs.isFlag()) {
             window.close();
         } else {
-            ToastController.getInstance().makeToast(window,rs.getInformation());
+            ToastController.getInstance().makeToast(window, rs.getInformation());
         }
     }
 

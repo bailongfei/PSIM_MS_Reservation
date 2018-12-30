@@ -10,8 +10,6 @@ import java.net.URLEncoder;
 
 public class SMSUtil {
 
-
-
     public static ResultMessage sendSMS(String tel, String content) {
         ResultMessage resultMessage = new ResultMessage();
         resultMessage.setFlag(false);
@@ -21,11 +19,13 @@ public class SMSUtil {
             return resultMessage;
         }
         try {
+            URL_String = URL_String + "?userName=admin&password=123456";
             URL_String = URL_String + "&destCode=" + tel;
             URL_String = URL_String + "&content=" + URLEncoder.encode(content, "UTF-8");
             URL_String = URL_String + "&sequenceId=123456";
             URL_String = URL_String + "&priority=100";
             URL_String = URL_String + "&isEncrypt=0";
+            System.out.println(URL_String);
             URLConnection urlConnection = new URL(URL_String).openConnection();
             HttpURLConnection huc = (HttpURLConnection) urlConnection;
             huc.setRequestProperty("Accept-Charset", "utf-8");
@@ -41,9 +41,17 @@ public class SMSUtil {
             resultMessage.setFlag(true);
             resultMessage.setInformation("短息已发送");
         } catch (IOException e) {
-            LogUtil.markLog(2, "电话号码:" + tel + "内容：" + content + "  发送失败 " + e.getMessage());
+            LogUtil.markLog(2, "电话号码:" + tel + " 内容：" + content + "  发送失败 :" + e.getMessage());
         }
         return resultMessage;
+    }
+
+    public static String  buildContent(String customerName,String date,String srvGroupName,String time){
+        String content = customerName+",您已预约"+date;
+        content = content+srvGroupName;
+        content = content+"请务必于"+time;
+        content = content+"凭证件原件及就诊卡至门诊1楼挂号大厅进行挂号。";
+        return content;
     }
 
 }

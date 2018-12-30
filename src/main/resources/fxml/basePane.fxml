@@ -29,7 +29,7 @@
                                                                         <Label styleClass="labelClass" text="患者卡号:">
 
                                                                         </Label>
-                                                                        <TextField fx:id="customerNoTextField" promptText="患者卡号">
+                                                                        <TextField fx:id="customerIDTextField" promptText="患者卡号">
                                                                             <font>
                                                                                 <Font size="17.0" />
                                                                             </font>
@@ -39,7 +39,7 @@
                                                 <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                                                    <children>
                                                       <Label styleClass="labelClass" text="证件号码:" />
-                                                      <TextField fx:id="customerIdTextField" promptText="证件卡号">
+                                                      <TextField fx:id="customerNoTextField" promptText="证件卡号">
                                                          <font>
                                                             <Font size="17.0" />
                                                          </font>

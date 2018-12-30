@@ -17,10 +17,6 @@ public class FileLockManager {
         file = new File(fileName);
     }
 
-    public FileLockManager(File file) {
-        FileLockManager.file = file;
-    }
-
     /**
      * 文件加锁并创建文件
      */
@@ -42,19 +38,15 @@ public class FileLockManager {
     /**
      * 解锁并删除文件
      */
-    public boolean unLock() throws IOException {
-        if (!file.exists()) {
-            return true;
-        } else {
-            if (fileLock != null) {
-                fileLock.release();
-            }
-            if (randomAccessFile != null) {
-                randomAccessFile.close();
-            }
-            return file.delete();
-        }
+    public void unLock() throws IOException {
 
+        if (fileLock != null) {
+            fileLock.release();
+        }
+        if (randomAccessFile != null) {
+            randomAccessFile.close();
+        }
+        file.delete();
     }
 
 }

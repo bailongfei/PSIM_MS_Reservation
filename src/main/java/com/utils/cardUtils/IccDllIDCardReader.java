@@ -1,4 +1,4 @@
-package com.utils.cardUtil;
+package com.utils.cardUtils;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
@@ -6,7 +6,7 @@ import com.sun.jna.Native;
 
 class IccDllIDCardReader {
 
-    public interface IccDll extends Library {
+    public interface IccDll extends Library  {
         IccDll INSTANCE = (IccDll) Native.loadLibrary("ICCDLL", IccDll.class);
 
         int ReadIdcInfo(int handle, IDCardResult.ByReference info);
@@ -14,13 +14,15 @@ class IccDllIDCardReader {
 
     private static IccDll iccDll = IccDll.INSTANCE;
 
-    static IDCardResult.ByReference readIDCard(int handle){
+    static IDCardResult.ByReference readIDCard(int handle) throws Exception {
         IDCardResult.ByReference info = new IDCardResult.ByReference();
-        int rs = iccDll.ReadIdcInfo(handle,info);
+
+        int rs = iccDll.ReadIdcInfo(handle, info);
         System.out.println(rs);
-        if (rs<0){
+        if (rs < 0) {
             return null;
         }
+
         return info;
     }
 

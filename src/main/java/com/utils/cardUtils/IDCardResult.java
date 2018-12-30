@@ -1,4 +1,4 @@
-package com.utils.cardUtil;
+package com.utils.cardUtils;
 
 
 import com.sun.jna.Structure;
