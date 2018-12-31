@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="gbk"?>
+<SERVICES sname="HSBY.BOOKING.XCRG.ConfirmBooking">
+    <PARAMS>
+        <PARAM pname="IdentifyID" pval="201507203001"/><!-- 识别代码 -->
+        <PARAM pname="CustomerID" pval="12345678"/><!-- 病员卡号,可以为空 -->
+        <PARAM pname="CustomerNo" pval="310190198609090987"/><!-- 身份证 -->
+        <PARAM pname="CustomerNoType" pval="1"/><!-- 证件类型:1身份证、2护照、3其
+他 -->
+        <PARAM pname="CustomerName" pval="小王"/><!-- 姓名-->
+        <PARAM pname="CustomerTel" pval="13523444909"/><!-- 联系方式 -->
+        <PARAM pname="SchedulingID" pval="10001"/><!-- 排班编号 -->
+        <PARAM pname="CreateUserID" pval="100"/><!-- 操作员工号 -->
+        <PARAM pname="CreateUserName" pval="测试员工"/><!-- 操作员姓名 -->
+    </PARAMS>
+</SERVICES>
