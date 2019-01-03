@@ -26,7 +26,7 @@ public class GetBookingInfoTask extends Task<ResultMap<List<BookingInfo>>> {
             this.bookingServices = new BookingServicesImpl();
             rs = bookingServices.getBookingInfo(customerNo);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("GetBookingInfoTask "+e.getMessage());
         }
         return rs;
     }

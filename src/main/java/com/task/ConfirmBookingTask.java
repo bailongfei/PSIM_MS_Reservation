@@ -5,7 +5,6 @@ import com.info.ResultMap;
 import com.info.UserInfo;
 import com.services.BookingServices;
 import com.services.impl.BookingServicesImpl;
-import com.utils.LogUtil;
 import javafx.concurrent.Task;
 
 public class ConfirmBookingTask extends Task<ResultMap<BookingResult>> {
@@ -26,8 +25,7 @@ public class ConfirmBookingTask extends Task<ResultMap<BookingResult>> {
             bookingServices = new BookingServicesImpl();
             rs = bookingServices.confirmBooking(userInfo);
         } catch (Exception e) {
-            LogUtil.markLog(2, "预约失败" + e.getMessage());
-
+            System.out.println("ConfirmBookingTask "+e.getMessage());
         }
         return rs;
     }

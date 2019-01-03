@@ -2,6 +2,7 @@ package com.services;
 
 import com.entities.BookingInfo;
 import com.entities.BookingResult;
+import com.entities.SchedulingInfo;
 import com.info.ResultMap;
 import com.info.UserInfo;
 
@@ -12,7 +13,7 @@ public interface BookingServices {
     /**
      * 获取当日号源信息
      */
-    ResultMap getSchedulingToday();
+    ResultMap<List<SchedulingInfo>> getSchedulingToday(String srvGroupID,String districtID,String bookingTypeID);
     /**
      * 取消预约
      *

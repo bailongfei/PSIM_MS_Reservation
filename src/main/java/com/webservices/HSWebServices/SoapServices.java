@@ -228,8 +228,4 @@ public class SoapServices {
         return resp;
     }
 
-    public static void main(String[] args) {
-        System.out.println(getBookingInfo("340121199402063781"));
-    }
-
 }

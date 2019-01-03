@@ -2,6 +2,7 @@ package com.services.impl;
 
 import com.entities.BookingInfo;
 import com.entities.BookingResult;
+import com.entities.SchedulingInfo;
 import com.info.ResultMap;
 import com.info.UserInfo;
 import com.services.BookingServices;
@@ -18,8 +19,44 @@ import java.util.List;
 public class BookingServicesImpl implements BookingServices {
 
     @Override
-    public ResultMap getSchedulingToday() {
-        return null;
+    public ResultMap<List<SchedulingInfo>> getSchedulingToday(String srvGroupID,String districtID,String bookingTypeID) {
+        ResultMap<List<SchedulingInfo>> resMap = new ResultMap<>();
+        resMap.setResultCode("0");
+        resMap.setResultMessage(" ");
+        try{
+            String resp = SoapServices.getScheduling(srvGroupID,districtID,bookingTypeID);
+            Document document = DocumentHelper.parseText(resp);
+            resMap.setResultCode(document.getRootElement().elements().get(0).elements().get(0).attributeValue("pval"));
+
+            resMap.setResultMessage(document.getRootElement().elements().get(0).elements().get(1).attributeValue("pval"));
+
+            if (resMap.getResultCode().equals("1")) {
+                List<Element> domList = document.getRootElement().elements();
+                List<SchedulingInfo> schedulingInfo;
+                if (domList.size() > 1) {
+                    schedulingInfo = new ArrayList<>();
+                    for (int i = 1; i < domList.size() ; i++) {
+                        SchedulingInfo scheduling = new SchedulingInfo();
+                        scheduling.setSrvGroupID(domList.get(i).elements().get(0).attributeValue("pval"));
+                        scheduling.setSrvGroupID(domList.get(i).elements().get(1).attributeValue("pval"));
+                        scheduling.setSrvGroupID(domList.get(i).elements().get(2).attributeValue("pval"));
+                        scheduling.setSrvGroupID(domList.get(i).elements().get(3).attributeValue("pval"));
+                        scheduling.setSrvGroupID(domList.get(i).elements().get(4).attributeValue("pval"));
+                        scheduling.setSrvGroupID(domList.get(i).elements().get(5).attributeValue("pval"));
+                        scheduling.setSrvGroupID(domList.get(i).elements().get(6).attributeValue("pval"));
+                        scheduling.setSrvGroupID(domList.get(i).elements().get(7).attributeValue("pval"));
+                        scheduling.setSrvGroupID(domList.get(i).elements().get(8).attributeValue("pval"));
+                        scheduling.setSrvGroupID(domList.get(i).elements().get(9).attributeValue("pval"));
+                        schedulingInfo.add(scheduling);
+                    }
+                    resMap.setParam(schedulingInfo);
+                }
+            }
+
+        }catch (Exception ex){
+            LogUtil.markLog(2, "获取信息异常，BookingServices.java getSchedulingToday() " + ex.getMessage());
+        }
+        return resMap;
     }
 
     @Override
@@ -111,14 +148,6 @@ public class BookingServicesImpl implements BookingServices {
             LogUtil.markLog(2, "BookingServices.java getBookingInfo() " + e.getMessage());
         }
         return resMap;
-    }
-
-    public static void main(String[] args) {
-        ResultMap<List<BookingInfo>> a = new BookingServicesImpl().getBookingInfo("340121199402063781");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        System.out.println(a);
     }
 
 }

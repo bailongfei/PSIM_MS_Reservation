@@ -63,10 +63,14 @@ public class SMSUtil {
         return content;
     }
 
+    public static void main(String[] args) {
+
+    }
+
     /**
      * 取消短信内容拼写
      */
-    public static String buildCancelContent(String customerName, String Date, String srvGroupName, String time) {
+    public static String buildCancelContent(String customerName, String srvGroupName, String time) {
         String content = customerName + ",您预约的";
         content = content + time + srvGroupName + "门诊已取消。";
 
