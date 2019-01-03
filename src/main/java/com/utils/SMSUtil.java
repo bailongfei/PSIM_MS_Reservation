@@ -1,6 +1,6 @@
 package com.utils;
 
-import com.info.ResultMessage;
+import com.info.ResultMap;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -8,14 +8,20 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+/**
+ * 用于华山北院短信平台发送
+ */
 public class SMSUtil {
 
-    public static ResultMessage sendSMS(String tel, String content) {
-        ResultMessage resultMessage = new ResultMessage();
-        resultMessage.setFlag(false);
-        resultMessage.setInformation("短息发送失败，请查看日志");
-        String URL_String =  IniUtil.readSMSURL();
-        if (URL_String.equals("")){
+    /**
+     * 短信发送
+     */
+    public static ResultMap sendSMS(String tel, String content) {
+        ResultMap resultMessage = new ResultMap();
+        resultMessage.setResultCode("0");
+        resultMessage.setResultMessage("短息发送失败，请查看日志");
+        String URL_String = IniUtil.readSMSURL();
+        if (URL_String.equals("")) {
             return resultMessage;
         }
         try {
@@ -38,20 +44,34 @@ public class SMSUtil {
                 throw new IOException("" + huc.getResponseCode());
             }
             huc.disconnect();
-            resultMessage.setFlag(true);
-            resultMessage.setInformation("短息已发送");
+            resultMessage.setResultCode("1");
+            resultMessage.setResultMessage("短息已发送");
         } catch (IOException e) {
             LogUtil.markLog(2, "电话号码:" + tel + " 内容：" + content + "  发送失败 :" + e.getMessage());
         }
         return resultMessage;
     }
 
-    public static String  buildContent(String customerName,String date,String srvGroupName,String time){
-        String content = customerName+",您已预约"+date;
-        content = content+srvGroupName;
-        content = content+"请务必于"+time;
-        content = content+"凭证件原件及就诊卡至门诊1楼挂号大厅进行挂号。";
+    /**
+     * 预约短信内容拼写
+     */
+    public static String buildBookingContent(String customerName, String date, String srvGroupName, String time) {
+        String content = customerName + ",您已预约" + date;
+        content = content + srvGroupName;
+        content = content + "请务必于" + time;
+        content = content + "凭证件原件及就诊卡至门诊1楼挂号大厅进行挂号。";
         return content;
     }
+
+    /**
+     * 取消短信内容拼写
+     */
+    public static String buildCancelContent(String customerName, String Date, String srvGroupName, String time) {
+        String content = customerName + ",您预约的";
+        content = content + time + srvGroupName + "门诊已取消。";
+
+        return content;
+    }
+
 
 }

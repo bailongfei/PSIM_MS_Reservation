@@ -5,6 +5,8 @@ import com.entities.BookingResult;
 import com.info.ResultMap;
 import com.info.UserInfo;
 
+import java.util.List;
+
 public interface BookingServices {
 
     /**
@@ -13,6 +15,7 @@ public interface BookingServices {
     ResultMap getSchedulingToday();
     /**
      * 取消预约
+     *
      */
     ResultMap cancelBooking(String bookingId);
     /**
@@ -22,6 +25,6 @@ public interface BookingServices {
     /**
      * 获取预约信息（按身份证）
      */
-    ResultMap<BookingInfo> getBookingInfo(String customerNo);
+    ResultMap<List<BookingInfo>> getBookingInfo(String customerNo);
 
 }

@@ -13,6 +13,11 @@ import java.text.SimpleDateFormat;
  */
 public class LogUtil {
 
+    /**
+     * 日志记录方法
+     * @param status
+     * @param message
+     */
     public static void markLog(Integer status,String message){
         Log log = new Log(status,message);
         String dirName;
@@ -23,9 +28,14 @@ public class LogUtil {
             dirName = "Log";
         }
         fileName = dirName +"/"+ new SimpleDateFormat("yyyy-MM-dd").format(log.getLogDate())+"Log.txt";
-        writeLog(dirName,fileName,log);
+        createLogFile(dirName,fileName,log);
     }
 
+    /**
+     * 追加日志
+     * @param file
+     * @param log
+     */
     private static void logWrite(File file,Log log){
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter(file,true));
@@ -39,7 +49,13 @@ public class LogUtil {
         }
     }
 
-    private static void writeLog(String dirName ,String fileName,Log log){
+    /**
+     * 创建日志文件
+     * @param dirName
+     * @param fileName
+     * @param log
+     */
+    private static void createLogFile(String dirName ,String fileName,Log log){
         File file = new File(fileName);
         if (file.exists()){
             logWrite(file,log);

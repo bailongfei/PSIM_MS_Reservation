@@ -6,6 +6,11 @@ import java.util.Map;
 public class SoapResultUtil {
 
 
+    /**
+     * 创建请求XML
+     * @param params
+     * @return
+     */
     static String buildRequestXml(Map<String, String> params) {
         if (params == null || params.get("sname") == null || params.get("sname").length() == 0) {
             return null;
@@ -32,6 +37,11 @@ public class SoapResultUtil {
         return sb.toString();
     }
 
+    /**
+     * 创建响应XML
+     * @param params
+     * @return
+     */
     public static String buildResponseXml(List<Map<String, String>> params) {
         if (params == null || params.size() == 0) {
             return null;
@@ -71,12 +81,22 @@ public class SoapResultUtil {
         return sb.toString();
     }
 
+    /**
+     * 替换XML拼接字符
+     * @param str
+     * @return
+     */
     private static String convert(String str) {
         return str == null ? null
                 : str.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("'", "&apos;")
                 .replace("\"", "&quot;").replaceAll("[\\x00-\\x08\\x0b-\\x0c\\x0e-\\x1f]", "");
     }
 
+    /**
+     * 替换XML转义字符
+     * @param str
+     * @return
+     */
     public static String convertBack(String str) {
         return str == null ? null :
                 str

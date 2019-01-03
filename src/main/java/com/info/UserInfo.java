@@ -1,16 +1,14 @@
 package com.info;
 
+/**
+ * customerID 为病人卡号 身份证读取 不读取医保卡号
+ * customerNo 为病人身份证 三代二代医保卡读卡读取身份证号
+ * CustomerNoType 为病人证件号码1 身份证 2 护照 3 其他
+ * customerName 病人姓名
+ * customerTel 预约手机号
+ * schedulingId 排班别号
+ */
 public class UserInfo<T> {
-
-    /**
-     * customerID 为病人卡号 身份证读取 不读取医保卡号
-     * customerNo 为病人身份证 三代二代医保卡读卡读取身份证号
-     * CustomerNoType 为病人证件号码1 身份证 2 护照 3 其他
-     * customerName 病人姓名
-     * customerTel 预约手机号
-     * schedulingId 排班别号
-     */
-
     private String customerID = "";
     private String customerNo = "";
     private String customerNoType = "";

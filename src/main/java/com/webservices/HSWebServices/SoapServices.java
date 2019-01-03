@@ -36,7 +36,9 @@ public class SoapServices {
      */
     private static String paramName = "in0";
 
-    //    拼接soap
+    /**
+     * 拼接soap信息
+     */
     private static String soapBuild(String message) {
         String soapAction = "ns:" + actionName;
         String paramAction = "ns:" + paramName;
@@ -54,6 +56,9 @@ public class SoapServices {
         return sb.toString();
     }
 
+    /**
+     * 发送soap 信息
+     */
     private static String callServices(String actionName, String message) {
         HttpURLConnection conn = null;
         OutputStreamWriter outputStreamWriter = null;
@@ -103,7 +108,11 @@ public class SoapServices {
     }
 
 
-    //    发送soap信息
+    /**
+     *  第三方jar 发送soap 信息
+     * @param soapString
+     * @return
+     */
     public static String callServices(String soapString) {
         String resp = "";
         try {
@@ -124,7 +133,11 @@ public class SoapServices {
         return resp;
     }
 
-    // 关闭资源
+    /**
+     * 发送完毕，关闭相对于的资源
+     * @param conn
+     * @param source
+     */
     private static void closeResource(HttpURLConnection conn, AutoCloseable... source) {
         try {
             if (source != null) {
@@ -145,6 +158,9 @@ public class SoapServices {
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 
+    /**
+     * 顾总接口文档标注
+     */
     public static String getBookingInfo(String customerNo) {
         Map<String, String> map = new LinkedHashMap<>();
         map.put("sname", "HSBY.BOOKING.GetBookingInfo");
@@ -152,12 +168,15 @@ public class SoapServices {
         map.put("CustomerNo", customerNo);
         map.put("BeginDate", sdf.format(new Date()));
         String req = SoapResultUtil.buildRequestXml(map);
-//        System.out.println(req);
+        System.out.println(req);
         String resp = callServices("getBookingInfo", soapBuild(req));
-//        System.out.println(resp);
+        System.out.println(resp);
         return resp;
     }
 
+    /**
+     * 顾总接口文档标注
+     */
     public static String cancelBooking(String bookingID) {
         Map<String, String> map = new LinkedHashMap<>();
         map.put("sname", "HSBY.BOOKING.GetBookingInfo");
@@ -170,6 +189,9 @@ public class SoapServices {
         return resp;
     }
 
+    /**
+     * 顾总接口文档标注
+     */
     public static String confirmBooking(String customerId, String customerNo, String customerNoType, String customerName, String customerTel, String schedulingID) {
         Map<String, String> map = new LinkedHashMap<>();
         map.put("sname", "HSBY.BOOKING.XCRG.ConfirmBooking");
@@ -189,6 +211,9 @@ public class SoapServices {
         return resp;
     }
 
+    /**
+     * 顾总接口文档标注
+     */
     public static String getScheduling(String srvGroupId, String districtId, String bookingTypeId) {
         Map<String, String> map = new LinkedHashMap<>();
         map.put("sname", "HSBY.BOOKING.GetScheduling");
@@ -205,8 +230,6 @@ public class SoapServices {
 
     public static void main(String[] args) {
         System.out.println(getBookingInfo("340121199402063781"));
-
-
     }
 
 }

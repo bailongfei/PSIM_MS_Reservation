@@ -1,6 +1,6 @@
 package com.utils.cardUtils;
 
-import com.info.ResultMessage;
+import com.info.ResultMap;
 import com.info.UserInfo;
 import com.utils.LogUtil;
 import com.webservices.TranBookingInfo;
@@ -19,80 +19,83 @@ import java.io.StringReader;
 
 public class CardIdentity {
 
-    public static ResultMessage<UserInfo> getUserInfoBySSCard(){
-        ResultMessage<UserInfo> resultMessage = new ResultMessage<>();
+    /**
+     * 社保卡读卡
+     *
+     * @return
+     */
+    public static ResultMap<UserInfo> getUserInfoBySSCard() {
+        ResultMap<UserInfo> resultMessage = new ResultMap<>();
         UserInfo userInfo;
-        resultMessage.setT(null);
+        resultMessage.setParam(null);
         System.out.println("s000");
         userInfo = DLLUtil.getId();
-        if (userInfo!=null){
-            resultMessage.setFlag(true);
+        if (userInfo != null) {
+            resultMessage.setResultCode("1");
             userInfo.setCustomerNoType("1");
-            resultMessage.setT(userInfo);
+            resultMessage.setParam(userInfo);
         } else {
-            resultMessage.setFlag(false);
-            resultMessage.setInformation("没有信息");
+            resultMessage.setResultCode("0");
+            resultMessage.setResultMessage("无法读取芯片卡信息，请尝试重新读取");
         }
         return resultMessage;
 
     }
 
-    public static ResultMessage<UserInfo> getUserInfoByCardString(String cardString){
-        ResultMessage<UserInfo> resultMessage = new ResultMessage<>();
+    public static ResultMap<UserInfo> getUserInfoByCardString(String cardString) {
+        ResultMap<UserInfo> resultMessage = new ResultMap<>();
+        resultMessage.setResultCode("0");
         UserInfo userInfo;
-        resultMessage.setT(null);
+        resultMessage.setParam(null);
         // 判断输入框的字符串长度
-        if (cardString.length()==15){
+        if (cardString.length() == 15) {
             System.out.println("自费走his");
             String result = getInformationFromHis(cardString);
             // 拆分result的值
-            String pname[] = {"Result","ResultInfo","CustomerName","CustomerNo","CustomerTel","CustomerMobile"};
-            String[][] resultArray = getData(result,pname,0);
+            String pname[] = {"Result", "ResultInfo", "CustomerName", "CustomerNo", "CustomerTel", "CustomerMobile"};
+            String[][] resultArray = getData(result, pname, 0);
             System.out.println(resultArray.length);
-            if (resultArray.length>1){
-                if (resultArray[0][0].equals("1")){
+            if (resultArray.length > 1) {
+                if (resultArray[0][0].equals("1")) {
                     userInfo = new UserInfo();
                     userInfo.setCustomerID(cardString);
                     userInfo.setCustomerNo(resultArray[1][3]);
                     userInfo.setCustomerName(resultArray[1][2]);
                     userInfo.setCustomerNoType("1");
-                    resultMessage.setInformation(resultArray[0][1]);
-                    resultMessage.setT(userInfo);
-                    resultMessage.setFlag(true);
+                    resultMessage.setResultMessage(resultArray[0][1]);
+                    resultMessage.setParam(userInfo);
+                    resultMessage.setResultCode("1");
                 } else {
-                    resultMessage.setFlag(false);
-                    resultMessage.setInformation(resultArray[0][1]);
+                    resultMessage.setResultMessage(resultArray[0][1]);
                 }
             } else {
-                resultMessage.setFlag(false);
-                resultMessage.setInformation("没有信息");
+                resultMessage.setResultMessage("无法读取磁条卡信息，请尝试重新读取");
             }
         } else {
             System.out.println("白玉兰卡走his");
             String result = getInformationFromHis(cardString);
             // 拆分result的值
-            String pname[] = {"Result","ResultInfo","CustomerName","CustomerNo","CustomerTel","CustomerMobile"};
-            String[][] resultArray = getData(result,pname,0);
-            if (resultArray[0][0].equals("1")){
+            String pname[] = {"Result", "ResultInfo", "CustomerName", "CustomerNo", "CustomerTel", "CustomerMobile"};
+            String[][] resultArray = getData(result, pname, 0);
+            if (resultArray[0][0].equals("1")) {
                 // 判断是否有信息
-                if (resultArray.length>1){
-                    if (resultArray[1][2]!=null&&!resultArray[1][2].equals("")&&resultArray[1][2].length()>1){
+                if (resultArray.length > 1) {
+                    if (resultArray[1][2] != null && !resultArray[1][2].equals("") && resultArray[1][2].length() > 1) {
                         // his有信息
                         userInfo = new UserInfo();
                         userInfo.setCustomerID(cardString);
                         userInfo.setCustomerName(resultArray[1][2]);
                         userInfo.setCustomerNo(resultArray[1][3]);
                         userInfo.setCustomerNoType("1");
-                        resultMessage.setInformation(resultArray[0][1]);
-                        resultMessage.setT(userInfo);
-                        resultMessage.setFlag(true);
-                    }else {
-                        resultMessage.setInformation(resultArray[0][1]);
-                        resultMessage.setFlag(false);
+                        resultMessage.setResultMessage(resultArray[0][1]);
+                        resultMessage.setParam(userInfo);
+                        resultMessage.setResultCode("1");
+                    } else {
+                        resultMessage.setResultMessage(resultArray[0][1]);
+
                     }
-                } else{
-                    resultMessage.setFlag(false);
-                    resultMessage.setInformation("没有信息");
+                } else {
+                    resultMessage.setResultMessage("无法读取磁条卡信息，请尝试重新读取");
                 }
             }
 //              else {
@@ -103,15 +106,20 @@ public class CardIdentity {
         return resultMessage;
     }
 
-    public static ResultMessage<UserInfo> getUserInfoByCustomerCard(){
+    /**
+     * 良标身份证端口
+     *
+     * @return
+     */
+    public static ResultMap<UserInfo> getUserInfoByCustomerCard() {
         System.out.println("走身份证");
-        ResultMessage<UserInfo> resultMessage = new ResultMessage<>();
-        try{
+        ResultMap<UserInfo> resultMessage = new ResultMap<>();
+        try {
             UserInfo userInfo = new UserInfo();
             int handle = LBIDCardReader.openReader();
             IDCardResult.ByReference info = IccDllIDCardReader.readIDCard(handle);
             LBIDCardReader.closeReader(handle);
-            if (info!=null){
+            if (info != null) {
                 String id = "";
                 String SFZ = new String(info.pid).trim();
                 String name = new String(info.name).trim();
@@ -120,20 +128,22 @@ public class CardIdentity {
                 userInfo.setCustomerName(name);
                 userInfo.setCustomerNoType("1");
             }
-            resultMessage.setT(userInfo);
-        }catch (Exception e){
-            LogUtil.markLog(2,"身份证读卡异常"+e.getMessage());
+            resultMessage.setParam(userInfo);
+        } catch (Exception e) {
+            LogUtil.markLog(2, "身份证读卡异常" + e.getMessage());
         }
         return resultMessage;
     }
 
-    //执行接口返回数据
-    private static String getInformationFromHis(String customerId){
+    /**
+     * 执行接口返回数据
+     */
+    private static String getInformationFromHis(String customerId) {
         TranBookingInfoPortType tranBookingInfoPortType = new TranBookingInfo().getTranBookingInfoHttpPort();
-        String str="<?xml version='1.0' encoding='gbk'?>"
+        String str = "<?xml version='1.0' encoding='gbk'?>"
                 + "<SERVICES sname='HSBY.BOOKING.GetCustomerInfo'>"
                 + "<PARAMS><PARAM pname='IdentifyID' pval='6AA36B715F8CEC7D8B79FFB6D16C4DD4' />"
-                + "<PARAM pname='CustomerID' pval='"+customerId+"' />"
+                + "<PARAM pname='CustomerID' pval='" + customerId + "' />"
                 + "</PARAMS></SERVICES>";
         System.out.println(str);
         String backInfo = tranBookingInfoPortType.execXML(str);
@@ -141,7 +151,10 @@ public class CardIdentity {
         return backInfo;
     }
 
-
+    /**
+     * 解析XML
+     * @return
+     */
     private static String[][] getData(String execXML, String[] Pname, int location) {
         // 获得xml文件内容
         StringReader sr = new StringReader(execXML);
@@ -171,12 +184,10 @@ public class CardIdentity {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            LogUtil.markLog(2,"获取病人基本信息，解析返回参数异常 CardIdentity.java getData() "+e.getMessage());
+            LogUtil.markLog(2, "获取病人基本信息，解析返回参数异常 CardIdentity.java getData() " + e.getMessage());
         }
         return pval;
     }
-
-
 
 
 }

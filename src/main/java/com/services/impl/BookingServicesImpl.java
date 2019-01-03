@@ -12,6 +12,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookingServicesImpl implements BookingServices {
@@ -34,7 +35,7 @@ public class BookingServicesImpl implements BookingServices {
             resMap.setResultMessage(document.getRootElement().elements().get(0).elements().get(1).attributeValue("pval"));
 
         } catch (DocumentException e) {
-            LogUtil.markLog(2,"BookingServices.java cancelBooking() "+ e.getMessage());
+            LogUtil.markLog(2, "BookingServices.java cancelBooking() " + e.getMessage());
         }
         return resMap;
     }
@@ -46,7 +47,7 @@ public class BookingServicesImpl implements BookingServices {
         resMap.setResultMessage("获取信息异常，BookingServices.java confirmBooking() ");
         try {
 
-            String resp = SoapServices.confirmBooking(userInfo.getCustomerID(),userInfo.getCustomerNo(),userInfo.getCustomerNoType(),userInfo.getCustomerName(),userInfo.getCustomerTel(),userInfo.getSchedulingID());
+            String resp = SoapServices.confirmBooking(userInfo.getCustomerID(), userInfo.getCustomerNo(), userInfo.getCustomerNoType(), userInfo.getCustomerName(), userInfo.getCustomerTel(), userInfo.getSchedulingID());
             Document document = DocumentHelper.parseText(resp);
             List<Element> list = document.getRootElement().elements().get(0).elements();
             resMap.setResultCode(list.get(0).attributeValue("pval"));
@@ -61,14 +62,14 @@ public class BookingServicesImpl implements BookingServices {
             bookingResult.setDistrict(list.get(6).attributeValue("pval"));
 
         } catch (DocumentException e) {
-            LogUtil.markLog(2,"BookingServices.java getBookingInfo() "+ e.getMessage());
+            LogUtil.markLog(2, "BookingServices.java getBookingInfo() " + e.getMessage());
         }
         return resMap;
     }
 
     @Override
-    public ResultMap<BookingInfo> getBookingInfo(String customerNo) {
-        ResultMap<BookingInfo> resMap = new ResultMap<>();
+    public ResultMap<List<BookingInfo>> getBookingInfo(String customerNo) {
+        ResultMap<List<BookingInfo>> resMap = new ResultMap<>();
         resMap.setResultCode("0");
         resMap.setResultMessage("获取信息异常，BookingServices.java getBookingInfo() ");
         try {
@@ -78,31 +79,46 @@ public class BookingServicesImpl implements BookingServices {
 
             resMap.setResultMessage(document.getRootElement().elements().get(0).elements().get(1).attributeValue("pval"));
 
-            if (resMap.getResultCode().equals("1") && document.getRootElement().elements().size() > 1) {
-                BookingInfo bookingInfo = new BookingInfo();
-                List<Element> list = document.getRootElement().elements().get(1).elements();
-                bookingInfo.setSrvGroupID(list.get(0).attributeValue("pval"));
-                bookingInfo.setSrvGroupName(list.get(1).attributeValue("pval"));
-                bookingInfo.setStaffCode(list.get(2).attributeValue("pval"));
-                bookingInfo.setStaffName(list.get(3).attributeValue("pval"));
-                bookingInfo.setSrvCodeID(list.get(4).attributeValue("pval"));
-                bookingInfo.setSrvCodeName(list.get(5).attributeValue("pval"));
-                bookingInfo.setSchedulingDate(list.get(6).attributeValue("pval"));
-                bookingInfo.setSchedulingType(list.get(7).attributeValue("pval"));
-                bookingInfo.setFloor(list.get(8).attributeValue("pval"));
-                bookingInfo.setDistrict(list.get(9).attributeValue("pval"));
-                bookingInfo.setBookingTime(list.get(10).attributeValue("pval"));
-                bookingInfo.setBookingStatus(list.get(11).attributeValue("pval"));
-                bookingInfo.setBookingID(list.get(12).attributeValue("pval"));
-                bookingInfo.setYYLY(list.get(13).attributeValue("pval"));
-                bookingInfo.setQueueNo(list.get(14).attributeValue("pval"));
-                resMap.setParam(bookingInfo);
+            if (resMap.getResultCode().equals("1")) {
+                List<Element> domList = document.getRootElement().elements();
+                List<BookingInfo> bookingInfos;
+                if (domList.size() > 1) {
+                    bookingInfos = new ArrayList<>();
+                    for (int i = 1; i < domList.size() ; i++) {
+                        BookingInfo bookingInfo = new BookingInfo();
+                        bookingInfo.setSrvGroupID(domList.get(i).elements().get(0).attributeValue("pval"));
+                        bookingInfo.setSrvGroupName(domList.get(i).elements().get(1).attributeValue("pval"));
+                        bookingInfo.setStaffCode(domList.get(i).elements().get(2).attributeValue("pval"));
+                        bookingInfo.setStaffName(domList.get(i).elements().get(3).attributeValue("pval"));
+                        bookingInfo.setSrvCodeID(domList.get(i).elements().get(4).attributeValue("pval"));
+                        bookingInfo.setSrvCodeName(domList.get(i).elements().get(5).attributeValue("pval"));
+                        bookingInfo.setSchedulingDate(domList.get(i).elements().get(6).attributeValue("pval"));
+                        bookingInfo.setSchedulingType(domList.get(i).elements().get(7).attributeValue("pval"));
+                        bookingInfo.setFloor(domList.get(i).elements().get(8).attributeValue("pval"));
+                        bookingInfo.setDistrict(domList.get(i).elements().get(9).attributeValue("pval"));
+                        bookingInfo.setBookingTime(domList.get(i).elements().get(10).attributeValue("pval"));
+                        bookingInfo.setBookingStatus(domList.get(i).elements().get(11).attributeValue("pval"));
+                        bookingInfo.setBookingID(domList.get(i).elements().get(12).attributeValue("pval"));
+                        bookingInfo.setYYLY(domList.get(i).elements().get(13).attributeValue("pval"));
+                        bookingInfo.setQueueNo(domList.get(i).elements().get(14).attributeValue("pval"));
+                        bookingInfos.add(bookingInfo);
+                    }
+                    resMap.setParam(bookingInfos);
+                }
             }
 
         } catch (DocumentException e) {
-            LogUtil.markLog(2,"BookingServices.java getBookingInfo() "+ e.getMessage());
+            LogUtil.markLog(2, "BookingServices.java getBookingInfo() " + e.getMessage());
         }
         return resMap;
+    }
+
+    public static void main(String[] args) {
+        ResultMap<List<BookingInfo>> a = new BookingServicesImpl().getBookingInfo("340121199402063781");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println(a);
     }
 
 }

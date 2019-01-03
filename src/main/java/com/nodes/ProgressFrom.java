@@ -18,9 +18,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+/**
+ * 加载动画
+ */
 public class ProgressFrom {
 
     private Stage dialogStage;
+
 
     public ProgressFrom(final Task<?> task, Stage primaryStage, String hint) {
         dialogStage = new Stage();
@@ -72,6 +76,9 @@ public class ProgressFrom {
         fadeInTimeline.play();
     }
 
+    /**
+     * 激活加载动画
+     */
     public void activateProgressBar() {
         dialogStage.show();
     }

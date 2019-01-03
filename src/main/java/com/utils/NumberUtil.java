@@ -1,6 +1,6 @@
 package com.utils;
 
-import com.info.ResultMessage;
+import com.info.ResultMap;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,30 +19,41 @@ public class NumberUtil {
         return Pattern.matches(REGEX_MOBILE, mobile);
     }
 
-    public static ResultMessage isPhone(String phone) {
-        ResultMessage resultMessage = new ResultMessage();
-        resultMessage.setFlag(false);
+    /**
+     * 手机号码验证
+     * @param phone
+     * @return
+     */
+    public static ResultMap isPhone(String phone) {
+        ResultMap resultMap = new ResultMap();
+        resultMap.setResultCode("0");
         if (phone.length() != 11) {
 //            不满11位
-            resultMessage.setInformation("手机号应为11位数");
-            return resultMessage;
+            resultMap.setResultMessage("手机号应为11位数");
+            return resultMap;
         } else {
             Pattern p = Pattern.compile(REGEX_MOBILE);
             Matcher m = p.matcher(phone);
             boolean isMatch = m.matches();
             if (!isMatch) {
 //                不符合正则表达式
-                resultMessage.setInformation("请填入正确的手机号");
+                resultMap.setResultMessage("请填入正确的手机号");
+            } else {
+                resultMap.setResultCode("1");
             }
-            resultMessage.setFlag(isMatch);
-            return resultMessage;
+            return resultMap;
         }
     }
 
-    public static ResultMessage isID(String id){
-        ResultMessage resultMessage = new ResultMessage();
-        resultMessage.setInformation("身份证号应该为15位或18位");
-        resultMessage.setFlag(false);
+    /**
+     * 身份证号码验证
+     * @param id
+     * @return
+     */
+    public static ResultMap isID(String id){
+        ResultMap resultMap = new ResultMap();
+        resultMap.setResultMessage("身份证号应该为15位或18位");
+        resultMap.setResultCode("0");
         if (id.length()==15) {
 //            15位
             Pattern p = Pattern.compile(REGEX_ID_15);
@@ -50,11 +61,12 @@ public class NumberUtil {
             boolean isMatch = m.matches();
             if (!isMatch) {
 //               不符合15位正则表达式
-                resultMessage.setInformation("不符合15位身份证");
+                resultMap.setResultMessage("不符合15位身份证");
             } else{
-                resultMessage.setInformation("");
+                resultMap.setResultMessage("");
+                resultMap.setResultCode("1");
             }
-            resultMessage.setFlag(isMatch);
+
         }
         if (id.length()==18){
 //            18位
@@ -63,14 +75,13 @@ public class NumberUtil {
             boolean isMatch = m.matches();
             if (isMatch) {
 //               不符合18位正则表达式
-                resultMessage.setInformation("");
-                resultMessage.setFlag(true);
+                resultMap.setResultMessage("");
+                resultMap.setResultCode("1");
             } else{
-                resultMessage.setFlag(false);
-                resultMessage.setInformation("不符合18位身份证");
+                resultMap.setResultMessage("不符合18位身份证");
             }
         }
-        return resultMessage;
+        return resultMap;
     }
 
 }

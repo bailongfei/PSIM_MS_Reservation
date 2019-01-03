@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-public final class Toast {
+final class Toast {
 
     private static Stage stage;
     private static Stage toastStage;
@@ -21,8 +21,7 @@ public final class Toast {
     private static int fadeOutDelay;
 
 
-
-    public Toast(Stage ownerStage,String toastMsg, int toastDelay, int fadeInDelay, int fadeOutDelay) {
+    Toast(Stage ownerStage,String toastMsg, int toastDelay, int fadeInDelay, int fadeOutDelay) {
         toastStage = new Stage();
         toastStage.initOwner(ownerStage);
         toastStage.setResizable(false);
@@ -47,11 +46,11 @@ public final class Toast {
         Toast.fadeOutDelay = fadeOutDelay;
     }
 
-    public void closeStage(){
+    void closeStage(){
         toastStage.hide();
     }
 
-    public void doSomething(NodeCallBack nodeCallBack){
+    void doSomething(NodeCallBack nodeCallBack){
         nodeCallBack.callBackFunction();
         callBack();
     }

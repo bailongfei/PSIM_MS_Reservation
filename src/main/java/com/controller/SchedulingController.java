@@ -2,7 +2,6 @@ package com.controller;
 
 import com.entities.BookingResult;
 import com.info.ResultMap;
-import com.info.ResultMessage;
 import com.info.UserInfo;
 import com.nodes.ProgressFrom;
 import com.nodes.ToastController;
@@ -71,9 +70,9 @@ public class SchedulingController {
 //        注册按钮
         registerButton.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                ResultMessage rs = NumberUtil.isPhone(customerTelTextField.getText());
+                ResultMap rs = NumberUtil.isPhone(customerTelTextField.getText());
 
-                if (rs.isFlag()) {
+                if (rs.getResultCode().equals("1")) {
                     userInfo.setCustomerTel(customerTelTextField.getText());
                     // 人工预约
                     ConfirmBookingTask confirmBookingTask = new ConfirmBookingTask(userInfo);
@@ -90,7 +89,7 @@ public class SchedulingController {
                     });
 
                 } else {
-                    ToastController.getInstance().makeToast(window, rs.getInformation());
+                    ToastController.getInstance().makeToast(window, rs.getResultMessage());
                 }
             }
         });
@@ -124,11 +123,11 @@ public class SchedulingController {
     }
 
     private void sendSMS() {
-        ResultMessage rs = SMSUtil.sendSMS(customerTelTextField.getText(), "这是一条测试数据，无需回复。");
-        if (rs.isFlag()) {
+        ResultMap rs = SMSUtil.sendSMS(customerTelTextField.getText(), "这是一条测试数据，无需回复。");
+        if (rs.getResultCode().equals("1")) {
             window.close();
         } else {
-            ToastController.getInstance().makeToast(window, rs.getInformation());
+            ToastController.getInstance().makeToast(window, rs.getResultMessage());
         }
     }
 

@@ -1,12 +1,12 @@
 package com.task;
 
-import com.info.ResultMessage;
+import com.info.ResultMap;
 import com.info.UserInfo;
 import com.utils.LogUtil;
 import com.utils.cardUtils.CardIdentity;
 import javafx.concurrent.Task;
 
-public class ReadCardTask extends Task<ResultMessage<UserInfo>> {
+public class ReadCardTask extends Task<ResultMap<UserInfo>> {
 
     public static final int ID_CARD = 0;
     public static final int MS_CARD = 1;
@@ -22,8 +22,10 @@ public class ReadCardTask extends Task<ResultMessage<UserInfo>> {
     }
 
     @Override
-    protected ResultMessage<UserInfo> call() {
-        ResultMessage<UserInfo> userInfo;
+    protected ResultMap<UserInfo> call() {
+        ResultMap<UserInfo> userInfo = new ResultMap<>();
+        userInfo.setResultCode("0");
+        userInfo.setResultMessage("错误调用读卡，读卡失败");
         try {
 
             switch (this.cardType) {
@@ -37,15 +39,14 @@ public class ReadCardTask extends Task<ResultMessage<UserInfo>> {
                     userInfo = CardIdentity.getUserInfoBySSCard();
                     break;
                 default:
-                    userInfo = new ResultMessage<>();
                     break;
             }
-            return userInfo;
-        } catch (Exception e) {
-            LogUtil.markLog(2, "读卡失败");
-            return null;
-        }
 
+        } catch (Exception e) {
+            LogUtil.markLog(2, "错误调用读卡，读卡失败");
+
+        }
+        return userInfo;
     }
 
 }

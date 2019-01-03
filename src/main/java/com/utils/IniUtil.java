@@ -12,7 +12,9 @@ import java.util.regex.Pattern;
 
 public class IniUtil {
 
-    //    按钮状态
+    /**
+     * 读取按钮状态
+     */
     public static String readButtonInfo(String buttonName) {
         try {
             File file = new File("AppConfig.ini");
@@ -28,7 +30,9 @@ public class IniUtil {
         return "0";
     }
 
-    //    身份证COM
+    /**
+     * 读取身份证COM口
+     */
     public static String readYiBaoCOM() {
         try {
             File file = new File("AppConfig.ini");
@@ -44,7 +48,9 @@ public class IniUtil {
         return "COM3";
     }
 
-    //    短息平台地址
+    /**
+     * 读取短息平台地址
+     */
     static String readSMSURL() {
         try {
             File file = new File("AppConfig.ini");
@@ -60,7 +66,9 @@ public class IniUtil {
         return "";
     }
 
-    //    科室配置
+    /**
+     * 科室配置
+     */
     public static String readSrvGroup() {
         try {
             File file = new File("AppConfig.ini");
@@ -76,7 +84,10 @@ public class IniUtil {
         return "";
     }
 
-    //    数据库读取
+    /**
+     * 数据库读取
+     * @return
+     */
     public static Map<String, String> readJDBCProperties() {
         Map<String, String> map = new HashMap<>();
         try {
@@ -97,6 +108,10 @@ public class IniUtil {
         return null;
     }
 
+    /**
+     * 修改ini配置
+     * @param ids
+     */
     public static void modifyIni(String ids) {
         try {
             File file = new File("AppConfig.ini");
@@ -105,7 +120,7 @@ public class IniUtil {
             } else {
                 Wini ini = null;
                 ini = new Wini(file);
-                ini.put("SrvGroup","ids",ids);
+                ini.put("SrvGroup", "ids", ids);
                 ini.store();
             }
         } catch (IOException e) {

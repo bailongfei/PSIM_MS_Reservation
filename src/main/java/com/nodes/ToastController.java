@@ -16,6 +16,9 @@ public class ToastController {
         return innerClass.impl;
     }
 
+    /**
+     * 发送消息窗体
+     */
     public void makeToast(Stage stage,String message){
         if (toast==null){
             toast = new Toast(stage, message, 2000, 500, 500);

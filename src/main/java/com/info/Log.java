@@ -3,6 +3,13 @@ package com.info;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 日志
+ * @logDate  日志记录时间
+ * @logStatus 日志状态 1(消息)，2(异常)
+ * @logStatusDesc 日志描述
+ * @logMessage 日志主要内容
+ */
 public class Log {
 
     private Date logDate = new Date();

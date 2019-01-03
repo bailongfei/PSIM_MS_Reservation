@@ -12,18 +12,23 @@ public class ConfirmBookingTask extends Task<ResultMap<BookingResult>> {
 
     private UserInfo userInfo;
     private BookingServices bookingServices;
-    public ConfirmBookingTask(UserInfo userInfo){
+
+    public ConfirmBookingTask(UserInfo userInfo) {
         this.userInfo = userInfo;
     }
 
     @Override
-    protected ResultMap<BookingResult> call(){
-        try{
+    protected ResultMap<BookingResult> call() {
+        ResultMap<BookingResult> rs = new ResultMap<>();
+        rs.setResultCode("0");
+        rs.setResultMessage("操作失败");
+        try {
             bookingServices = new BookingServicesImpl();
-            return bookingServices.confirmBooking(userInfo);
-        }catch (Exception e){
-            LogUtil.markLog(2,"预约失败"+e.getMessage());
-            return null;
+            rs = bookingServices.confirmBooking(userInfo);
+        } catch (Exception e) {
+            LogUtil.markLog(2, "预约失败" + e.getMessage());
+
         }
+        return rs;
     }
 }

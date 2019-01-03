@@ -1,5 +1,11 @@
 package com.info;
 
+/**
+ * 存储信息 使用先判断消息代码
+ * @resultCode 消息代码 1 成功 0 失败
+ * @resultMessage 消息信息
+ * @param --消息体
+ */
 public class ResultMap<T> {
 
     private String resultCode;
