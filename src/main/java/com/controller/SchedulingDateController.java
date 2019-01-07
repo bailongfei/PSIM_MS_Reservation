@@ -7,6 +7,7 @@ import com.info.UserInfo;
 import com.nodes.ProgressFrom;
 import com.nodes.ToastController;
 import com.task.ConfirmBookingTask;
+import com.utils.IniUtil;
 import com.utils.NumberUtil;
 import com.utils.SMSUtil;
 import javafx.collections.FXCollections;
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import org.ini4j.Ini;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -126,6 +128,13 @@ public class SchedulingDateController {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #ff8497;");
                                 }
+                                if (IniUtil.readButtonInfo("datePickerWeekend").equals("1")) {
+                                    if (item.getDayOfWeek().getValue() == 7 || item.getDayOfWeek().getValue() == 6) {
+                                        setDisable(true);
+                                        setStyle("-fx-background-color: #ff8497;");
+                                    }
+                                }
+
                             }
                         };
                     }
@@ -176,11 +185,11 @@ public class SchedulingDateController {
             }
         });
 
-        datePicker.valueProperty().addListener(lis->{
+        datePicker.valueProperty().addListener(lis -> {
             //  日期选择
             ObservableList<SchedulingInfo> filterList = FXCollections.observableArrayList();
-            for (SchedulingInfo schedulingInfo:schedulingInfoList){
-                if (schedulingInfo.getSchedulingDate().equals(datePicker.getValue().toString())){
+            for (SchedulingInfo schedulingInfo : schedulingInfoList) {
+                if (schedulingInfo.getSchedulingDate().equals(datePicker.getValue().toString())) {
                     filterList.addAll(schedulingInfo);
                 }
             }
@@ -227,7 +236,7 @@ public class SchedulingDateController {
      */
     private void sendSMS(String content) {
         SchedulingInfo scheduling = schedulingInfoTable.getSelectionModel().getSelectedItem();
-        ResultMap rs = SMSUtil.sendSMS(customerTelTextField.getText(),content);
+        ResultMap rs = SMSUtil.sendSMS(customerTelTextField.getText(), content);
         if (rs.getResultCode().equals("1")) {
             window.close();
         } else {
