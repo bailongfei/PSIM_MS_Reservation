@@ -86,6 +86,7 @@ public class IniUtil {
 
     /**
      * 数据库读取
+     *
      * @return
      */
     public static Map<String, String> readJDBCProperties() {
@@ -110,6 +111,7 @@ public class IniUtil {
 
     /**
      * 修改ini配置
+     *
      * @param ids
      */
     public static void modifyIni(String ids) {
@@ -126,6 +128,53 @@ public class IniUtil {
         } catch (IOException e) {
             LogUtil.markLog(2, "修改Ini 文件异常,IniUtil.java modifyIni() " + e.getMessage());
         }
+    }
+
+    /**
+     * 修改验证信息开关
+     */
+    public static void modifyVerifyInfoButton() {
+        try {
+            File file = new File("AppConfig.ini");
+            if (!file.exists() && !file.isDirectory()) {
+                throw new IOException("配置文件找不到");
+            } else {
+                Ini.Section section = new Ini(file).get("ButtonStatus");
+                String status = section.get("verifyInfoButton");
+                if (status.equals("1")) {
+                    status = "0";
+                } else {
+                    status = "1";
+                }
+
+                Wini ini = new Wini(file);
+                ini.put("ButtonStatus", "verifyInfoButton", status);
+                ini.store();
+            }
+        } catch (IOException e) {
+            LogUtil.markLog(2, "修改Ini 文件异常,IniUtil.java modifyIni() " + e.getMessage());
+        }
+    }
+
+    /**
+     * 获取验证信息开关
+     */
+    public static boolean getVerifyInfoButtonStatus() {
+        try {
+            File file = new File("AppConfig.ini");
+            if (!file.exists() && !file.isDirectory()) {
+                throw new IOException("配置文件找不到");
+            } else {
+                Ini.Section section = new Ini(file).get("ButtonStatus");
+                String status = section.get("verifyInfoButton");
+                return status.equals("1");
+
+            }
+        } catch (IOException e) {
+            LogUtil.markLog(2, "修改Ini 文件异常,IniUtil.java modifyIni() " + e.getMessage());
+            return false;
+        }
+
     }
 
 

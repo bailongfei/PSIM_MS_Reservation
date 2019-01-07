@@ -3,6 +3,7 @@ package com.entities;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+
 public class BookingInfo {
 
     private StringProperty srvGroupID;
@@ -17,9 +18,14 @@ public class BookingInfo {
     private StringProperty district;
     private StringProperty bookingTime;
     private StringProperty bookingStatus;
+    private StringProperty bookingStatusDesc;
     private StringProperty bookingID;
     private StringProperty YYLY;
     private StringProperty queueNo;
+
+    public StringProperty bookingStatusDesc(){
+        return bookingStatusDesc;
+    }
 
     public String getSrvGroupID() {
         return srvGroupID.get();
@@ -162,7 +168,13 @@ public class BookingInfo {
     }
 
     public void setBookingStatus(String bookingStatus) {
+
         this.bookingStatus = new SimpleStringProperty(bookingStatus);
+        if (getBookingStatus().equals("1")){
+            bookingStatusDesc = new SimpleStringProperty("确认");
+        } else {
+            bookingStatusDesc = new SimpleStringProperty("取消");
+        }
     }
 
     public String getBookingID() {

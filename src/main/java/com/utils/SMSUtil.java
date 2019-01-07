@@ -62,11 +62,7 @@ public class SMSUtil {
         content = content + "凭证件原件及就诊卡至门诊1楼挂号大厅进行挂号。";
         return content;
     }
-
-    public static void main(String[] args) {
-
-    }
-
+    
     /**
      * 取消短信内容拼写
      */

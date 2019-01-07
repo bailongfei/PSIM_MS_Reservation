@@ -1,6 +1,5 @@
 package com.nodes;
 
-import com.utils.LogUtil;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.concurrent.Task;
@@ -24,7 +23,6 @@ import javafx.util.Duration;
 public class ProgressFrom {
 
     private Stage dialogStage;
-
 
     public ProgressFrom(final Task<?> task, Stage primaryStage, String hint) {
         dialogStage = new Stage();
@@ -70,7 +68,6 @@ public class ProgressFrom {
         KeyFrame fadeOutKey1 = new KeyFrame(Duration.millis(20000));
         fadeInTimeline.getKeyFrames().add(fadeOutKey1);
         fadeInTimeline.setOnFinished((aeb) -> {
-            LogUtil.markLog(1,"读卡超时");
             cancelProgressBar();
         });
         fadeInTimeline.play();
@@ -83,7 +80,7 @@ public class ProgressFrom {
         dialogStage.show();
     }
 
-    private void cancelProgressBar() {
+    public void cancelProgressBar() {
         dialogStage.close();
     }
 }

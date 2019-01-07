@@ -120,7 +120,7 @@ public class CardIdentity {
             IDCardResult.ByReference info = IccDllIDCardReader.readIDCard(handle);
             LBIDCardReader.closeReader(handle);
             if (info != null) {
-                String id = "";
+                String id = "0";
                 String SFZ = new String(info.pid).trim();
                 String name = new String(info.name).trim();
                 userInfo.setCustomerNo(SFZ);

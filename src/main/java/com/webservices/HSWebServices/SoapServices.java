@@ -92,8 +92,7 @@ public class SoapServices {
                 bos.write(buffer, 0, temp);
             }
             String out = bos.toString();
-            Document document = null;
-            document = DocumentHelper.parseText(out);
+            Document document =  DocumentHelper.parseText(out);
             resp = document.getRootElement().elements().get(0).elements().get(0).elements().get(0).getText();
         } catch (IOException e) {
             LogUtil.markLog(2, "发送soap信息异常，SoapServices.java callServices() " + e.getMessage() + "\n" + "soap 消息体为：" + message);
@@ -110,8 +109,6 @@ public class SoapServices {
 
     /**
      *  第三方jar 发送soap 信息
-     * @param soapString
-     * @return
      */
     public static String callServices(String soapString) {
         String resp = "";
@@ -135,8 +132,6 @@ public class SoapServices {
 
     /**
      * 发送完毕，关闭相对于的资源
-     * @param conn
-     * @param source
      */
     private static void closeResource(HttpURLConnection conn, AutoCloseable... source) {
         try {
@@ -179,7 +174,7 @@ public class SoapServices {
      */
     public static String cancelBooking(String bookingID) {
         Map<String, String> map = new LinkedHashMap<>();
-        map.put("sname", "HSBY.BOOKING.GetBookingInfo");
+        map.put("sname", "HSBY.BOOKING.CancelBooking");
         map.put("IdentifyID", "DE10B1F1CD0064E98DDCE9BA489725ED");
         map.put("BookingID", bookingID);
         String req = SoapResultUtil.buildRequestXml(map);
@@ -202,8 +197,8 @@ public class SoapServices {
         map.put("CustomerName", customerName);
         map.put("CustomerTel", customerTel);
         map.put("SchedulingID", schedulingID);
-        map.put("CreateUserID", "");
-        map.put("CreateUserUser", "");
+        map.put("CreateUserID", "8888");
+        map.put("CreateUserUser", "xh");
         String req = SoapResultUtil.buildRequestXml(map);
         System.out.println(req);
         String resp = callServices("confirmBooking", soapBuild(req));

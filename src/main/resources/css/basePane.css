@@ -55,13 +55,8 @@
     -fx-alignment: center;
     -fx-text-alignment: center;
     -fx-font-family:"Microsoft YaHei" ;
-    -fx-font-size: 20px;
-    -fx-cell-size: 40px;
-}
-
-.tableViewClass .scroll-bar:horizontal{
-    -fx-opacity: 0;
-    -fx-padding: -7;
+    -fx-font-size: 14px;
+    -fx-cell-size: 30px;
 }
 
 .combo-box{

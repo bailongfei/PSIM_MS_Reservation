@@ -33,22 +33,11 @@ public class SchedulingInfo {
     private StringProperty bookingNumDesc;
 
     public StringProperty schedulingTypeDescProperty() {
-        schedulingTypeDesc = new SimpleStringProperty("");
-        if (getSchedulingType().equals("1")){
-            schedulingTypeDesc.setValue("上午");
-        } else {
-            schedulingTypeDesc.setValue("下午");
-        }
         return schedulingTypeDesc;
     }
 
     public StringProperty bookingNumDescProperty() {
-        bookingNumDesc = new SimpleStringProperty("");
-        if (getBookingNum().equals("1")){
-            bookingNumDesc.setValue("可预约");
-        } else {
-            bookingNumDesc.setValue("不可预约");
-        }
+
         return bookingNumDesc;
     }
 
@@ -121,7 +110,14 @@ public class SchedulingInfo {
     }
 
     public void setSchedulingType(String schedulingType) {
+
         this.schedulingType = new SimpleStringProperty(schedulingType);
+        schedulingTypeDesc = new SimpleStringProperty("");
+        if (getSchedulingType().equals("1")){
+            schedulingTypeDesc.setValue("上午");
+        } else {
+            schedulingTypeDesc.setValue("下午");
+        }
     }
 
     public String getFloor() {
@@ -170,5 +166,11 @@ public class SchedulingInfo {
 
     public void setBookingNum(String bookingNum) {
         this.bookingNum = new SimpleStringProperty(bookingNum);
+        bookingNumDesc = new SimpleStringProperty("");
+        if (getBookingNum().equals("1")){
+            bookingNumDesc.setValue("可预约");
+        } else {
+            bookingNumDesc.setValue("不可预约");
+        }
     }
 }

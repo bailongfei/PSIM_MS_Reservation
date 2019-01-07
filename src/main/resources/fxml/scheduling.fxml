@@ -35,10 +35,13 @@
                     <columns>
                         <TableColumn style="-fx-alignment: center;" fx:id="serialNumberColumn" editable="false"
                                      prefWidth="75.0" sortable="false" text="序号"/>
+                        <TableColumn style="-fx-alignment: center;" fx:id="schedulingDateColumn" editable="false"
+                                     prefWidth="75.0" sortable="false" text="预约日期"/>
                         <TableColumn style="-fx-alignment: center;" fx:id="schedulingTypeColumn" editable="false"
                                      prefWidth="75.0" sortable="false" text="上/下午"/>
                         <TableColumn style="-fx-alignment: center;" fx:id="bookingNumColumn" editable="false"
                                      prefWidth="75.0" sortable="false" text="是否可预约"/>
+
 
                     </columns>
                     <columnResizePolicy>
