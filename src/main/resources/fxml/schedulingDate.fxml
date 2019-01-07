@@ -35,7 +35,7 @@
                         <Font size="28.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="datePicker" editable="false" prefHeight="35.0" />
+                  <DatePicker fx:id="datePicker" editable="false" prefHeight="35.0" prefWidth="255.0" promptText="选择日期" />
                </children>
             </HBox>
                 <TableView fx:id="schedulingInfoTable" prefHeight="230.0" prefWidth="200.0">
@@ -44,8 +44,6 @@
                         <TableColumn fx:id="schedulingDateColumn" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: center;" text="预约日期" />
                         <TableColumn fx:id="schedulingTypeColumn" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: center;" text="上/下午" />
                         <TableColumn fx:id="bookingNumColumn" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: center;" text="是否可预约" />
-
-
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
